@@ -108,3 +108,15 @@ Entropy is measured in bits (as a representation of the number of possible optio
 | 61     | 111101       | 9      |
 | 62   | 111110     | +    |
 | 63     | 111111       | /      |
+
+Base64 encoding algorithm:
+
+1. Separation of the input stream of bytes into blocks of 3 bytes
+
+2.  Division of 24 bits of each 3-byte block into 4 groups of 6 bits
+ 
+3. Mapping each group of 6 bits to 1 symbol based on the encoding table
+ 
+4. If the last 3-byte block contains only 1 byte of input data, fill 2 bytes with the symbol =, if the last 3-byte block contains only 2 bytes of input data, fill 1 byte with the symbol =.
+
+![alt text](https://www.101computing.net/wp/wp-content/uploads/cryptography-base64-hexadecimal.png)
