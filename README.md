@@ -29,6 +29,11 @@ Information entropy is the average rate at which a stochastic data source produc
 
 Thus, when a data source has a less probable value (eg, when a low-probability event occurs), that event carries more information than when a data source has a more probable value. The amount of information transmitted by each generation event thus determined becomes a random variable whose mathematical expectation is the information entropy.
 ### The average entropy of the non-probable alphabet:
-<p align="center">$H = \sum^m_{i=1}{p_i l n P_i log_2 \frac{1}{p_i} } $</p>
+<p align="center">$H = \sum^m_{i=1}{p_i log_2 \frac{1}{p_i} } = \sum^m_{i=1}{p_i log_2{p_i} } $</p>
 
 where *m* - is the number of characters of the alphabet, *p* - is the probability of the character appearing
+
+
+Entropy is measured in bits (as a representation of the number of possible options)
+
+**The amount of information in the text** - is the average entropy of the original alphabet multiplied by the number of characters in the text
