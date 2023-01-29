@@ -1,6 +1,16 @@
 from math import log2
 # from collections import Counter
 
+def get_file_size(filename):
+    size = 0
+    with open(filename, "rb") as f:
+        while True:
+            block = f.read(4096)
+            if not block:
+                break
+            size += len(block)
+    return size
+
 
 def entropy(inmputdict):
     sigma_m_i = 0
@@ -25,8 +35,8 @@ def Letterprobability(inmputdict, totallen):
     return UkrLetterP
 
 
-def readfileprobability ():
-    file = open("destextes/2.txt", "r", encoding="utf8")
+def readfileprobability (num):
+    file = open("destextes/"+str(num)+".txt", "r", encoding="utf8")
     UkrLetterD = {"а": 0,"б": 0,"в": 0,"г": 0,"ґ": 0,"д": 0,"е": 0,"є": 0,"ж": 0,"з": 0,"и": 0,"і": 0,"ї": 0,"й": 0,"к": 0,"л": 0,"м": 0,"н": 0,"о": 0,"п": 0,
                   "р": 0,"с": 0,"т": 0,"у": 0,"ф": 0,"х": 0,"ц": 0,"ч": 0,"ш": 0,"щ": 0,"ь": 0,"ю": 0,"я": 0} # ,".": 0,",": 0,"!": 0,"?": 0,"-": 0 - do we even need it?
     # total alp len 33
@@ -38,7 +48,8 @@ def readfileprobability ():
             UkrLetterD[i] += 1
         except:
             continue # UkrLetterD.update({i: 1})
-    return UkrLetterD, totlen
+    alphabetPwr = len(UkrLetterD)
+    return UkrLetterD, totlen, alphabetPwr
 
     # entropy(Letterprobability(UkrLetterD, totlen))
     # with open('destextes/1.txt', 'r', encoding="utf8") as file:
@@ -50,11 +61,17 @@ def readfileprobability ():
     # return UkrLetterD # return symbols amount
     # text = open("1.txt", 'r', encoding="cp1251").read()
     # text
-
-test1, totallen = readfileprobability()
-print("letter amount:\n",test1)
+filenum = 4
+test1, totallen, power = readfileprobability(filenum)
 print("total char len:",totallen)
+print("alphabet power:", power)
+print("letter amount:\n",test1)
 test2 = Letterprobability(test1, totallen)
 print("letter probability\n",test2)
 test3 = entropy(test2)
-print("H =",round(test3,5))
+H_f = round(test3,5)
+print("H =",H_f)
+infomount = (H_f * totallen)*0.125 # /8
+print("Information:",round(infomount, 3), "bytes")
+filesize = get_file_size("destextes/"+str(filenum)+".txt")
+print("file size:",filesize, "bytes")
