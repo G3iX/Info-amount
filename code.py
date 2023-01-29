@@ -61,13 +61,13 @@ def readfileprobability (num):
     # return UkrLetterD # return symbols amount
     # text = open("1.txt", 'r', encoding="cp1251").read()
     # text
-filenum = 4
+filenum = 2
 test1, totallen, power = readfileprobability(filenum)
 print("total char len:",totallen)
 print("alphabet power:", power)
 print("letter amount:\n",test1)
 test2 = Letterprobability(test1, totallen)
-print("letter probability\n",test2)
+print("letter probability:\n", test2)
 test3 = entropy(test2)
 H_f = round(test3,5)
 print("H =",H_f)
@@ -75,3 +75,21 @@ infomount = (H_f * totallen)*0.125 # /8
 print("Information:",round(infomount, 3), "bytes")
 filesize = get_file_size("destextes/"+str(filenum)+".txt")
 print("file size:",filesize, "bytes")
+
+def preettyoutput():
+    from prettytable import PrettyTable
+    table = PrettyTable()
+    table.field_names = ["Letter", "Amount", "Probability"]
+    for i in test2:
+        table.add_row([i, test1[i], test2[i]])
+        # print(i,"-",test1[i], "-", test2[i])
+    table2 = PrettyTable()
+    table2.field_names = ["Variable name","Value"]
+    table2.add_row(["Average entropy",H_f])
+    table2.add_row(["Information Amount", str(round(infomount, 5)) + " bytes"])
+    table2.add_row(["File size", str(filesize) + " bytes"])
+    # table.sortby = 'Probability'
+    print(table)
+    print(table2)
+
+# preettyoutput()
