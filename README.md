@@ -1,7 +1,7 @@
 # `Info-amount`
 
 ![This is an image](https://img.shields.io/badge/Python-100%25-orange)
-![This is an image](https://img.shields.io/badge/version-0.1-lightblue)
+![This is an image](https://img.shields.io/badge/version-0.2-lightblue)
 
 Investigate probabilistic parameters of the Ukrainian language to estimate the amount of text information. Investigate the impact of various information encoding methods on its quantity
 
