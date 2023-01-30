@@ -54,13 +54,22 @@ def zipsizeNotes(num): # size of file archivated in zip
 # def Base64encode(filename):
 
 
-def readfileprobability (num, type):
-    file = open("destextes/"+str(num)+"."+ str(type), "r", encoding="utf8")
-    UkrLetterD = {"а": 0,"б": 0,"в": 0,"г": 0,"ґ": 0,"д": 0,"е": 0,"є": 0,"ж": 0,"з": 0,"и": 0,"і": 0,"ї": 0,"й": 0,"к": 0,"л": 0,"м": 0,"н": 0,"о": 0,"п": 0,
-                  "р": 0,"с": 0,"т": 0,"у": 0,"ф": 0,"х": 0,"ц": 0,"ч": 0,"ш": 0,"щ": 0,"ь": 0,"ю": 0,"я": 0} # ,".": 0,",": 0,"!": 0,"?": 0,"-": 0 - do we even need it?
+def readfileprobability (num, boolean_if_trueUkr):
+    if boolean_if_trueUkr:
+        file = open("destextes/"+str(num)+".txt", "r", encoding="utf8")
+    else:
+        file = open("destextes/" + str(num) + "_base64.txt", "r", encoding="utf8")
+    UkrLetterD = {"а": 0, "б": 0, "в": 0, "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0, "і": 0,
+                  "ї": 0, "й": 0, "к": 0, "л": 0, "м": 0, "н": 0, "о": 0, "п": 0,
+                  "р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0, "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0,
+                  "я": 0}  # "A":0, ,".": 0,",": 0,"!": 0,"?": 0,"-": 0 - do we even need it?
+    Base64LetterD = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0,
+                     "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0,
+                     "y": 0, "z": 0, "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+                     "+": 0, "/": 0, "=": 0}
     # total alp len 33
     totlen = 0
-    for i in file.read():
+    for i in file.read(): # why it read only as lovercase letters?
         #print(i)
         totlen += 1
         try:
@@ -80,12 +89,11 @@ def readfileprobability (num, type):
     # return UkrLetterD # return symbols amount
     # text = open("1.txt", 'r', encoding="cp1251").read()
     # text
-def execute():
-    filenum = 2
-    filetype = ["txt","zip", "rar", "xz", "gz", "bz2"]
-    globfiletype = filetype[0]
+def execute(LetterprobabilityAmount, totallen, power, filenum):
 
-    LetterprobabilityAmount, totallen, power = readfileprobability(filenum, globfiletype)
+    filetype = ["txt","zip", "rar", "xz", "gz", "bz2"]
+
+
     print("total char len:",totallen)
     print("alphabet power:", power)
     print("letter amount:\n",LetterprobabilityAmount)
@@ -96,7 +104,7 @@ def execute():
     print("H =",H_f)
     infomount = (H_f * totallen)*0.125 # /8
     print("Information:",round(infomount, 3), "bytes")
-    filesize = get_file_size("destextes/"+str(filenum)+"."+globfiletype)
+    filesize = get_file_size("destextes/"+str(filenum)+"."+filetype[0])
     print("file size:",filesize, "bytes")
     zipsize = get_file_size("destextes/"+str(filenum)+'.'+filetype[1])
     print("zipped size:", zipsize, "bytes")
@@ -108,9 +116,11 @@ def execute():
     print("gzipped size:", gzipsize, "bytes")
     bzipsize = get_file_size("destextes/" + str(filenum) + '.' + filetype[5])
     print("bzipped size:", bzipsize, "bytes")
-    return LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize
+    base64fz = get_file_size("destextes/" + str(filenum) + '_base64.' + filetype[0])
+    print("based64 size:", base64fz, "bytes")
+    return LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fz
 
-def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize):
+def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz):
     from prettytable import PrettyTable
     table = PrettyTable()
     table.field_names = ["Letter", "Amount", "Probability"]
@@ -119,7 +129,7 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
         # print(i,"-",test1[i], "-", test2[i])
     table2 = PrettyTable()
     table2.field_names = ["Variable name","Value", "dT"]
-    table2.add_row(["Average entropy",H_f, ''])
+    table2.add_row(["Average UKR entropy",H_f, ''])
     table2.add_row(["---------", 5.01, ' -----'])
     table2.add_row(["Information Amount", (round(infomount, 3))," bytes"])
     table2.add_row(["Actual File size", (filesize) ," bytes"])
@@ -128,14 +138,16 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
     table2.add_row(["Xzed File size", (round(xzsize, 4))," bytes"])
     table2.add_row(["Gzipped File size", round(gzipsize, 4)," bytes"])
     table2.add_row(["Bzipped File size", round(bzipsize, 4)," bytes"])
+    table2.add_row(["Based64 File size", round(base64fsz, 4), " bytes"])
     table2.sortby = 'Value'
     table2.reversesort = True
     print(table)
     print(table2)
-
-
-test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize= execute()
-preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize)
+filenum = 2
+LetterprobabilityAmount, totallen, power = readfileprobability(filenum, True)
+test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz = execute(LetterprobabilityAmount, totallen, power, filenum)
+#preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz)
+# print(bin("к"), "к")
 # s = input("-----")
 # if s != "asd":
 #    print("end")
