@@ -51,6 +51,9 @@ def zipsizeNotes(num): # size of file archivated in zip
                 print([i])
     return zip_bytes
 
+# def Base64encode(filename):
+
+
 def readfileprobability (num, type):
     file = open("destextes/"+str(num)+"."+ str(type), "r", encoding="utf8")
     UkrLetterD = {"а": 0,"б": 0,"в": 0,"г": 0,"ґ": 0,"д": 0,"е": 0,"є": 0,"ж": 0,"з": 0,"и": 0,"і": 0,"ї": 0,"й": 0,"к": 0,"л": 0,"м": 0,"н": 0,"о": 0,"п": 0,
@@ -82,13 +85,13 @@ def execute():
     filetype = ["txt","zip", "rar", "xz", "gz", "bz2"]
     globfiletype = filetype[0]
 
-    test1, totallen, power = readfileprobability(filenum, globfiletype)
+    LetterprobabilityAmount, totallen, power = readfileprobability(filenum, globfiletype)
     print("total char len:",totallen)
     print("alphabet power:", power)
-    print("letter amount:\n",test1)
-    test2 = Letterprobability(test1, totallen)
-    print("letter probability:\n", test2)
-    test3 = entropy(test2)
+    print("letter amount:\n",LetterprobabilityAmount)
+    LetterprobabilityDict = Letterprobability(LetterprobabilityAmount, totallen)
+    print("letter probability:\n", LetterprobabilityDict)
+    test3 = entropy(LetterprobabilityDict)
     H_f = round(test3,5)
     print("H =",H_f)
     infomount = (H_f * totallen)*0.125 # /8
@@ -105,14 +108,14 @@ def execute():
     print("gzipped size:", gzipsize, "bytes")
     bzipsize = get_file_size("destextes/" + str(filenum) + '.' + filetype[5])
     print("bzipped size:", bzipsize, "bytes")
-    return test1, test2, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize
+    return LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize
 
-def preettyoutput(test1, test2, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize):
+def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount, filesize, zipsize, rarsize, xzsize, gzipsize, bzipsize):
     from prettytable import PrettyTable
     table = PrettyTable()
     table.field_names = ["Letter", "Amount", "Probability"]
-    for i in test2:
-        table.add_row([i, test1[i], test2[i]])
+    for i in LetterprobabilityDict:
+        table.add_row([i, LetterprobabilityAmount[i], LetterprobabilityDict[i]])
         # print(i,"-",test1[i], "-", test2[i])
     table2 = PrettyTable()
     table2.field_names = ["Variable name","Value", "dT"]
@@ -133,3 +136,8 @@ def preettyoutput(test1, test2, H_f, infomount, filesize, zipsize, rarsize, xzsi
 
 test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize= execute()
 preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize)
+# s = input("-----")
+# if s != "asd":
+#    print("end")
+# else:
+#    print("sad")
