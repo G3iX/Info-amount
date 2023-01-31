@@ -135,7 +135,7 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
     table2 = PrettyTable()
     table2.field_names = ["Variable name","Value", "dT"]
     table2.add_row(["Average UKR entropy",H_f, ''])
-    table2.add_row(["---------", 5.01, ' -----'])
+    table2.add_row(["---------", 5.51, ' -----'])
     table2.add_row(["Information Amount", (round(infomount, 3))," bytes"])
     table2.add_row(["Actual File size", (filesize) ," bytes"])
     table2.add_row(["Zipped File size", (round(zipsize, 4))," bytes"])
@@ -148,7 +148,7 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
     table2.reversesort = True
     print(table)
     print(table2)
-filenum = 3
+filenum = 2
 LetterprobabilityAmount, totallen, power = readfileprobability(filenum, True)
 test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz = execute(LetterprobabilityAmount, totallen, power, filenum)
 preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz)

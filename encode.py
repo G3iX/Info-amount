@@ -2,7 +2,7 @@
 
 
 BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-
+            #   0123456789              24          36              52
 def readfile(num, type, bool): # false if base64encoded text
     if bool:
         file = open("destextes/" + str(num) + "." + str(type), "r", encoding="utf8")
@@ -97,6 +97,7 @@ def textbase64(data):
     #print( len(chunks[len(chunks)-2]))
 
     for chunk in chunks:
+        # print("chunk that decoding:" + chunk)
         if chunk != chunks[len(chunks)-1]: # last chunk
             index = int(chunk[0:6], 2)
             index2 = int(chunk[6:12], 2)
@@ -106,6 +107,9 @@ def textbase64(data):
             result += BASE64_CHARS[index2]
             result += BASE64_CHARS[index3]
             result += BASE64_CHARS[index4]
+            #print("index = {}, index2 = {}, index3={}, index4 = {}".format(index, index2, index3, index4))
+            #print("That means symbols {} - {} - {} - {}".format(BASE64_CHARS[index], BASE64_CHARS[index2],
+                      #                                          BASE64_CHARS[index3], BASE64_CHARS[index4]))
         else:
             if len(chunks[len(chunks) - 1]) < 24:
                 if len(chunks[len(chunks) - 1]) >= 18: # index - index2 - index3
@@ -116,6 +120,8 @@ def textbase64(data):
                     result += BASE64_CHARS[index2]
                     result += BASE64_CHARS[index3]
                     result += '='
+                    #print("index = {}, index2 = {}, index3={}, index4 = '='".format(index, index2,index3))
+                    #print("That means symbols {} - {} - {} - {}".format(BASE64_CHARS[index],BASE64_CHARS[index2],BASE64_CHARS[index3],'='))
                 else:
                     if len(chunks[len(chunks) - 1]) >= 12: # index - index2
                         index = int(chunk[0:6], 2)
@@ -124,27 +130,46 @@ def textbase64(data):
                         result += BASE64_CHARS[index2]
                         result += '='
                         result += '='
-    print(result)
+                        #print("index = {}, index2 = {}, index3={}, index4 = {}".format(index, index2, index3, index4))
+                        #print("That means symbols {} - {} - {} - {}".format(BASE64_CHARS[index], BASE64_CHARS[index2],
+                        #                                                    '=', '='))
+    print(" ",result)
     return result
 
+def frBtoBin(): # temp
+    sus = int('110111', 2) # temp
+    print(sus)
+    local = BASE64_CHARS[sus]
+    print(local)
+    susbin = format(sus, '06b')
+    print(susbin)
+# frBtoBin()
 
-
+# this code gen.s  0KODQsdGD0LTRjLdGP0LrRltC5g0L/RgNCw0LLQvtCy0ZbQ
+# but services    0KMg0LHRg9C00Ywt0Y/QutGW0Lkg0L/RgNCw0LLQvtCy0ZbQ
+# resources
 filenum = 4
 data,UkrLetterD, Ukrtotallen, UkrAlphabet_power = readfile(filenum,"txt", True)
-#print(data)
-#print("----")
+print(data)
+print("----")
 
 #print(UkrLetterD)
 
 
 base64_text = textbase64(data)
-# print("Base64 encoded text:", base64_text)
+print("----")
+
+import base64
+
+bnotmine = base64.b64encode(bytes(data, 'utf-8'))
+print(bnotmine) # "Base64 encoded text:",
 try:
     f = open("destextes/"+str(filenum)+"_base64.txt", "w")
     f.writelines(base64_text)
     f.close()
 except:
     print("error")
+
 
 # dataBase,UkrLetterBase, UkrtotallenBase, BaseAlphabet_power = readfile(filenum,"txt", False)
 
