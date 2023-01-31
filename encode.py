@@ -5,7 +5,7 @@ BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
             #   0123456789              24          36              52
 def readfile(num, type, bool): # false if base64encoded text
     if bool:
-        file = open("destextes/" + str(num) + "." + str(type), "r", encoding="utf8")
+        file = open("destextes/" + str(num) + "." + str(type), "r", encoding="utf8") # encoding='unicode_escape' # encoding="utf8"
         total_text = ""
         #LetterD = {}
         LetterD = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
@@ -78,11 +78,11 @@ def chuckprinter(chunks):
 def textbase64(data):
     result = ""
 
-    data_encoded = data.encode("utf-8")
+    data_encoded = data.encode("utf-8", errors='replace') # encoding='unicode_escape'
     binary_data = ("".join(format(byte, 'b') for byte in data_encoded))
 
-    # print(data_encoded)
-    # print(binary_data)
+    print(data_encoded)
+    print(binary_data)
 
     chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
     # print(chunks)
@@ -148,7 +148,7 @@ def frBtoBin(): # temp
 # this code gen.s  0KODQsdGD0LTRjLdGP0LrRltC5g0L/RgNCw0LLQvtCy0ZbQ
 # but services    0KMg0LHRg9C00Ywt0Y/QutGW0Lkg0L/RgNCw0LLQvtCy0ZbQ
 # resources
-filenum = 4
+filenum = 1
 data,UkrLetterD, Ukrtotallen, UkrAlphabet_power = readfile(filenum,"txt", True)
 print(data)
 print("----")
