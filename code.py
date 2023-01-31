@@ -57,16 +57,21 @@ def zipsizeNotes(num): # size of file archivated in zip
 def readfileprobability (num, boolean_if_trueUkr):
     if boolean_if_trueUkr:
         file = open("destextes/"+str(num)+".txt", "r", encoding="utf8")
+        UkrLetterD = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
+                      "Ї": 0, "Й": 0, "К": 0, "Л": 0, "М": 0, "Н": 0, "О": 0, "П": 0,
+                      "Р": 0, "С": 0, "Т": 0, "У": 0, "Ф": 0, "Х": 0, "Ц": 0, "Ч": 0, "Ш": 0, "Щ": 0, "Ь": 0, "Ю": 0,
+                      "Я": 0,"а": 0, "б": 0, "в": 0, "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0, "і": 0,
+                      "ї": 0, "й": 0, "к": 0, "л": 0, "м": 0, "н": 0, "о": 0, "п": 0,
+                      "р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0, "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0,
+                      "я": 0}  # "A":0, ,".": 0,",": 0,"!": 0,"?": 0,"-": 0 - do we even need it?
     else:
         file = open("destextes/" + str(num) + "_base64.txt", "r", encoding="utf8")
-    UkrLetterD = {"а": 0, "б": 0, "в": 0, "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0, "і": 0,
-                  "ї": 0, "й": 0, "к": 0, "л": 0, "м": 0, "н": 0, "о": 0, "п": 0,
-                  "р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0, "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0,
-                  "я": 0}  # "A":0, ,".": 0,",": 0,"!": 0,"?": 0,"-": 0 - do we even need it?
-    Base64LetterD = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0,
-                     "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0,
-                     "y": 0, "z": 0, "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-                     "+": 0, "/": 0, "=": 0}
+        UkrLetterD = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "H": 0, "I": 0, "J": 0, "K": 0, "L": 0,
+                         "M": 0, "N": 0, "O": 0, "P": 0, "Q": 0, "R": 0, "S": 0, "T": 0, "U": 0, "V": 0, "W": 0, "X": 0,
+                         "Y": 0, "Z": 0,"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0,
+                         "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0,
+                         "y": 0, "z": 0, "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+                         "+": 0, "/": 0, "=": 0} # Base64LetterD
     # total alp len 33
     totlen = 0
     for i in file.read(): # why it read only as lovercase letters?
@@ -75,7 +80,7 @@ def readfileprobability (num, boolean_if_trueUkr):
         try:
             UkrLetterD[i] += 1
         except:
-            continue # UkrLetterD.update({i: 1})
+            UkrLetterD.update({i: 1}) # continue
     alphabetPwr = len(UkrLetterD)
     return UkrLetterD, totlen, alphabetPwr
 
@@ -125,7 +130,7 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
     table = PrettyTable()
     table.field_names = ["Letter", "Amount", "Probability"]
     for i in LetterprobabilityDict:
-        table.add_row([i, LetterprobabilityAmount[i], LetterprobabilityDict[i]])
+        table.add_row(["'"+i+"'", LetterprobabilityAmount[i], LetterprobabilityDict[i]])
         # print(i,"-",test1[i], "-", test2[i])
     table2 = PrettyTable()
     table2.field_names = ["Variable name","Value", "dT"]
@@ -143,10 +148,10 @@ def preettyoutput(LetterprobabilityAmount, LetterprobabilityDict, H_f, infomount
     table2.reversesort = True
     print(table)
     print(table2)
-filenum = 2
+filenum = 3
 LetterprobabilityAmount, totallen, power = readfileprobability(filenum, True)
 test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz = execute(LetterprobabilityAmount, totallen, power, filenum)
-#preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz)
+preettyoutput(test1, test2, H_f, infomount, filesize,zipsize, rarsize, xzsize, gzipsize, bzipsize, base64fsz)
 # print(bin("к"), "к")
 # s = input("-----")
 # if s != "asd":
