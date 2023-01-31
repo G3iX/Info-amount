@@ -84,17 +84,10 @@ def textbase64(data):
     print(data_encoded)
     print(binary_data)
 
+
     chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
     # print(chunks)
 
-    # print(len(chunks)) # 24 - 1676 / 6 - 6704
-    # print("3 byte block:")  # one cyrillic symbol = 2 bytes = 16 bits / 24 bits
-    #for i in range(0, len(chunks)):
-    #    if i % 4 == 0:
-    #        print("-----", i)
-        # continue
-    #    print(chunks[i])
-    #print( len(chunks[len(chunks)-2]))
 
     for chunk in chunks:
         # print("chunk that decoding:" + chunk)
@@ -146,7 +139,7 @@ def frBtoBin(): # temp
 # frBtoBin()
 
 # this code gen.s  0KODQsdGD0LTRjLdGP0LrRltC5g0L/RgNCw0LLQvtCy0ZbQ
-# but services    0KMg0LHRg9C00Ywt0Y/QutGW0Lkg0L/RgNCw0LLQvtCy0ZbQ
+# but services     0KMg0LHRg9C00Ywt0Y/QutGW0Lkg0L/RgNCw0LLQvtCy0ZbQ
 # resources
 filenum = 1
 data,UkrLetterD, Ukrtotallen, UkrAlphabet_power = readfile(filenum,"txt", True)
