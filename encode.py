@@ -51,20 +51,9 @@ def readfile(num, type, bool): # false if base64encoded text
         # total_text = file.read()
     return total_text,LetterD, totlen, alphabetPwr
 
-
-def textbase64(data):
-    result = ""
-
-    dataencoded = data.encode("utf-8")
-    binary_data = ("".join(format(byte, 'b') for byte in dataencoded))
-    print(dataencoded)
-    print(binary_data)
-    chunks = [binary_data[i:i + 6] for i in range(0, len(binary_data), 6)]
-    print(chunks)
-    print(len(chunks)) # 24 - 1676 / 6 - 6704
-    # print("3 byte block:")  # one cyrillic symbol = 2 bytes = 16 bits / 24 bits (4 govno)
+def chuckprinter(chunks):
     if len(chunks)%4 == 0:
-        for i in range(0,len(chunks), 4):
+        for i in range(0,len(chunks)):
             # continue
             print(i)
             print(chunks[i],':',chunks[i+1],':',chunks[i+2],':',chunks[i+3])  # ,':',chunks[i+4],':',chunks[i+5]
@@ -86,6 +75,47 @@ def textbase64(data):
             print(len(chunks) - 4)
             print(chunks[len(chunks) - 4], ':', chunks[len(chunks) - 3], ':', chunks[len(chunks) - 2], ':',
                   chunks[len(chunks) - 1], "- two bytes (1 =)")
+def textbase64(data):
+    result = ""
+
+    dataencoded = data.encode("utf-8")
+    binary_data = ("".join(format(byte, 'b') for byte in dataencoded))
+
+    # print(dataencoded)
+    # print(binary_data)
+
+    chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
+    print(chunks)
+    #print(len(chunks)) # 24 - 1676 / 6 - 6704
+    # print("3 byte block:")  # one cyrillic symbol = 2 bytes = 16 bits / 24 bits (4 govno)
+    for i in range(0, len(chunks)):
+        if i % 4 == 0:
+            print("-----", i)
+        # continue
+        print(chunks[i])
+    if len(chunks[len(chunks)])<24:
+        print("sad")
+
+
+    # print(temp,'=>', len(temp))
+    #if len(temp)%8 == 0:
+    #    for chunk in chunks:
+    #        index = int(chunk, 2)
+    #        print(index)
+    #        result += BASE64_CHARS[index]
+    #else:
+    #    if len(temp)>8:
+    #        if len(temp) > 16:
+    #            for chunk in chunks:
+    #                index = int(chunk, 2)
+    #                print(index)
+    #                result += BASE64_CHARS[index]
+    #    else:
+
+
+
+
+
 
     #test = int('101110',base=2)
     #print('-',test)
@@ -99,7 +129,8 @@ def textbase64(data):
     return result
 
 
-filenum = 2
+
+filenum = 1
 data,UkrLetterD, Ukrtotallen, UkrAlphabet_power = readfile(filenum,"txt", True)
 print(data)
 print("----")
