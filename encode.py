@@ -54,7 +54,6 @@ def readfile(num, type, bool): # false if base64encoded text
 
 def textbase64(data):
     result = ""
-    padding = 0
 
     dataencoded = data.encode("utf-8")
     binary_data = ("".join(format(byte, 'b') for byte in dataencoded))
@@ -63,23 +62,42 @@ def textbase64(data):
     chunks = [binary_data[i:i + 6] for i in range(0, len(binary_data), 6)]
     print(chunks)
     print(len(chunks)) # 24 - 1676 / 6 - 6704
-    # print("3 byte block:")
-    for i in range(0,len(chunks)-6, 6):
-        print(i)
-        print(chunks[i],':',chunks[i+1],':',chunks[i+2],':',chunks[i+3],':',chunks[i+4],':',chunks[i+5])
-    if len(chunks)%6 != 0:
-        if (len(chunks) - 4)%6 != 0:
-            if (len(chunks) - 2)%6 != 0:
+    # print("3 byte block:")  # one cyrillic symbol = 2 bytes = 16 bits / 24 bits (4 govno)
+    if len(chunks)%4 == 0:
+        for i in range(0,len(chunks), 4):
+            # continue
+            print(i)
+            print(chunks[i],':',chunks[i+1],':',chunks[i+2],':',chunks[i+3])  # ,':',chunks[i+4],':',chunks[i+5]
+            if i == len(chunks) - 4:
+                if len(chunks[i + 3])<6:
+                    print("two bytes -> '",chunks[i+3],"' now will be '='", )
+    else:
+        for i in range(0,len(chunks)-4, 4):
+            # continue
+            print(i)
+            print(chunks[i],':',chunks[i+1],':',chunks[i+2],':',chunks[i+3])  # ,':',chunks[i+4],':',chunks[i+5]
+        if (len(chunks)) % 4 != 0:
+            if (len(chunks) - 2) % 4 != 0:
                 print('<----000---->')
             else:
-                print(len(chunks)-2)
-                print(chunks[len(chunks)-2],':',chunks[len(chunks)-1], "- one byte (2 =)")
+                print(len(chunks) - 2)
+                print(chunks[len(chunks) - 2], ':', chunks[len(chunks) - 1], "- one byte (2 =)")
         else:
             print(len(chunks) - 4)
-            print(chunks[len(chunks)-4],':',chunks[len(chunks)-3],':',chunks[len(chunks)-2],':',chunks[len(chunks)-1], "- two bytes (1 =)")
+            print(chunks[len(chunks) - 4], ':', chunks[len(chunks) - 3], ':', chunks[len(chunks) - 2], ':',
+                  chunks[len(chunks) - 1], "- two bytes (1 =)")
 
-    result = ""
+    #test = int('101110',base=2)
+    #print('-',test)
+    #print(BASE64_CHARS[test])
+    # for chunk in chunks:
+    #    index = int(chunk, 2)
+    #    print(index)
+    #    result += BASE64_CHARS[index]
+    # How can we add padding characters '=' to the end of the result?
+    print(result)
     return result
+
 
 filenum = 2
 data,UkrLetterD, Ukrtotallen, UkrAlphabet_power = readfile(filenum,"txt", True)
