@@ -60,8 +60,24 @@ def textbase64(data):
     binary_data = ("".join(format(byte, 'b') for byte in dataencoded))
     print(dataencoded)
     print(binary_data)
-    chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
+    chunks = [binary_data[i:i + 6] for i in range(0, len(binary_data), 6)]
     print(chunks)
+    print(len(chunks)) # 24 - 1676 / 6 - 6704
+    # print("3 byte block:")
+    for i in range(0,len(chunks)-6, 6):
+        print(i)
+        print(chunks[i],':',chunks[i+1],':',chunks[i+2],':',chunks[i+3],':',chunks[i+4],':',chunks[i+5])
+    if len(chunks)%6 != 0:
+        if (len(chunks) - 4)%6 != 0:
+            if (len(chunks) - 2)%6 != 0:
+                print('<----000---->')
+            else:
+                print(len(chunks)-2)
+                print(chunks[len(chunks)-2],':',chunks[len(chunks)-1], "- one byte (2 =)")
+        else:
+            print(len(chunks) - 4)
+            print(chunks[len(chunks)-4],':',chunks[len(chunks)-3],':',chunks[len(chunks)-2],':',chunks[len(chunks)-1], "- two bytes (1 =)")
+
     result = ""
     return result
 
