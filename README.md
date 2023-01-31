@@ -120,3 +120,6 @@ Base64 encoding algorithm:
 4. If the last 3-byte block contains only 1 byte of input data, fill 2 bytes with the symbol =, if the last 3-byte block contains only 2 bytes of input data, fill 1 byte with the symbol =.
 
 ![alt text](https://www.101computing.net/wp/wp-content/uploads/cryptography-base64-hexadecimal.png)
+
+<p align="center">IMG: Text to base_64 and after base_16 encoding example</p>
+<p align="center">(I'll do *cyrillic text* to binary and then to base_64 encoding)</p>
