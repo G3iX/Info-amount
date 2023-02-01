@@ -6,7 +6,7 @@ def read_file(num, type, bool): # false if base64encoded text
         with open("destextes/" + str(num) + "." + str(type), "r", encoding="utf8") as file:
             total_text = ""
             # LetterD = {}
-            ukr_letter_amount_in_text_dict = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
+            LetterD = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
                        "Ї": 0, "Й": 0, "К": 0, "Л": 0, "М": 0, "Н": 0, "О": 0, "П": 0,"Р": 0, "С": 0, "Т": 0, "У": 0,
                        "Ф": 0, "Х": 0, "Ц": 0, "Ч": 0, "Ш": 0, "Щ": 0, "Ь": 0, "Ю": 0,"Я": 0, "а": 0, "б": 0, "в": 0,
                        "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0,"і": 0,"ї": 0, "й": 0, "к": 0,
@@ -20,16 +20,16 @@ def read_file(num, type, bool): # false if base64encoded text
 
             for i in middle_text:
                 # print(i)
-                if i not in ukr_letter_amount_in_text_dict:
+                if i not in LetterD:
                     continue
                 else:           ### HERE WE GO!!!!!!!!!!!!!!!!!!!
                     total_text += i
                     totlen += 1
                     try:
-                        ukr_letter_amount_in_text_dict[i] += 1
+                        LetterD[i] += 1
                     except:
                         continue  # LetterD.update({i: 1})  # continue
-        alphabetPwr = len(ukr_letter_amount_in_text_dict)
+        alphabetPwr = len(LetterD)
         #total_text = file.read()
     else:
         file = open("destextes/" + str(num) + "_base64." + str(type), "r", encoding="utf8")
@@ -139,3 +139,5 @@ def encode_py_executer(filenum):
         f.close()
     except:
         print("encode_py_executer error (in encode.py)")
+
+# encode_py_executer(10)
