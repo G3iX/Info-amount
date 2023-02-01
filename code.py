@@ -45,33 +45,51 @@ def zip_size_notes(input_num): # size of file archivated in zip
 
 def read_letter_in_file_probability (file_name_input_num, if_ukr_set_boolean_true):
     if if_ukr_set_boolean_true:
-        file = open("destextes/"+str(file_name_input_num)+".txt", "r", encoding="utf8")
-        ukr_letter_amount_in_text_dict = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
-                      "Ї": 0, "Й": 0, "К": 0, "Л": 0, "М": 0, "Н": 0, "О": 0, "П": 0,
-                      "Р": 0, "С": 0, "Т": 0, "У": 0, "Ф": 0, "Х": 0, "Ц": 0, "Ч": 0, "Ш": 0, "Щ": 0, "Ь": 0, "Ю": 0,
-                      "Я": 0,"а": 0, "б": 0, "в": 0, "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0, "і": 0,
-                      "ї": 0, "й": 0, "к": 0, "л": 0, "м": 0, "н": 0, "о": 0, "п": 0,
-                      "р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0, "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0,
-                      "я": 0}  # 66
+        total_chars_in_text_amount_length_in_func = 0
+        with open("destextes/" + str(file_name_input_num) + ".txt", "r", encoding="utf8") as file:
+            total_text = ""
+            # LetterD = {}
+            letter_amount_in_text_dict = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
+                       "Ї": 0, "Й": 0, "К": 0, "Л": 0, "М": 0, "Н": 0, "О": 0, "П": 0,"Р": 0, "С": 0, "Т": 0, "У": 0,
+                       "Ф": 0, "Х": 0, "Ц": 0, "Ч": 0, "Ш": 0, "Щ": 0, "Ь": 0, "Ю": 0,"Я": 0, "а": 0, "б": 0, "в": 0,
+                       "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0,"і": 0,"ї": 0, "й": 0, "к": 0,
+                       "л": 0, "м": 0, "н": 0, "о": 0, "п": 0,"р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0,
+                       "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0,"я": 0}
+
+            middle_text = ""
+            for line in file:
+                line = line.rstrip()
+                middle_text += line
+
+            for i in middle_text:
+                # print(i)
+                if i not in letter_amount_in_text_dict:
+                    continue
+                else:
+                    total_chars_in_text_amount_length_in_func += 1
+                    try:
+                        letter_amount_in_text_dict[i] += 1
+                    except:
+                        continue  # LetterD.update({i: 1})  # continue
     else:
         file = open("destextes/" + str(file_name_input_num) + "_base64.txt", "r", encoding="utf8")
-        ukr_letter_amount_in_text_dict = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "H": 0, "I": 0, "J": 0, "K": 0, "L": 0,
+        letter_amount_in_text_dict = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "H": 0, "I": 0, "J": 0, "K": 0, "L": 0,
                          "M": 0, "N": 0, "O": 0, "P": 0, "Q": 0, "R": 0, "S": 0, "T": 0, "U": 0, "V": 0, "W": 0, "X": 0,
                          "Y": 0, "Z": 0,"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0,
                          "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0,
                          "y": 0, "z": 0, "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
                          "+": 0, "/": 0, "=": 0} #  65
 
-    total_chars_in_text_amount_length_in_func = 0
-    for i in file.read():
-        total_chars_in_text_amount_length_in_func += 1
-        try:
-            ukr_letter_amount_in_text_dict[i] += 1
-        except:
-            continue
-            # ukr_letter_amount_in_text_dict.update({i: 1}) # continue
-    alphabet_power = len(ukr_letter_amount_in_text_dict)
-    return ukr_letter_amount_in_text_dict, total_chars_in_text_amount_length_in_func, alphabet_power
+        total_chars_in_text_amount_length_in_func = 0
+        for i in file.read():
+            total_chars_in_text_amount_length_in_func += 1
+            try:
+                letter_amount_in_text_dict[i] += 1
+            except:
+                continue
+                # ukr_letter_amount_in_text_dict.update({i: 1}) # continue
+    alphabet_power = len(letter_amount_in_text_dict)
+    return letter_amount_in_text_dict, total_chars_in_text_amount_length_in_func, alphabet_power
 
 def execute(amount_letters_to_appear, total_number_of_char_in_text, power, file_name_input_num, if_ukr_set_boolean_true):
     file_type_list = ["txt","zip", "rar", "xz", "gz", "bz2"]
@@ -128,15 +146,20 @@ def execute(amount_letters_to_appear, total_number_of_char_in_text, power, file_
         print("b64 based64 size:", base64_file_size, "bytes")
     return probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text, file_size, zip_size, rar_size, xz_size, gzip_size, bzip_size, base64_file_size
 
-def preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text, file_size, zip_size,
+def preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_base64_dict,amount_letters_to_appear_base64, probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text, file_size, zip_size,
                    rar_size, xz_size, gzip_size, bzip_size, base64fsz, entropy_rounded_base64_h_f,amount_of_information_in_the_base64_text, base64_zip_size, base64_rar_size,
                    base64_xz_size, base64_gzip_size, base64_bzip_size): # 18
     from prettytable import PrettyTable
     table = PrettyTable()
+    tableb64 = PrettyTable()
     table.field_names = ["Letter", "Amount", "Probability"]
     for i in probability_of_letter_to_appear_dict:
         table.add_row(["'"+i+"'", amount_letters_to_appear[i], probability_of_letter_to_appear_dict[i]])
         # print(i,"-",test1[i], "-", test2[i])
+    tableb64.field_names = ["B64Let", "Amount", "Probability"]
+    for i in amount_letters_to_appear_base64:
+        tableb64.add_row(["'"+i+"'", amount_letters_to_appear_base64[i], probability_of_letter_to_appear_base64_dict[i]])
+
     table2 = PrettyTable()
     table2.field_names = ["Variable name","Value", "dT"]
     table2.add_row(["Average UKR entropy",entropy_rounded_h_f, ''])
@@ -159,9 +182,14 @@ def preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_dic
     # table2.sortby = 'Value'
     # table2.reversesort = True
     print(table)
+    print(tableb64)
     print(table2)
 
-file_name_input_num = 2
+file_name_input_num = 4
+import sys # for output
+sys.stdout = open('output'+str(file_name_input_num)+'.txt', 'w')
+
+
 amount_letters_to_appear, total_number_of_char_in_text, alph_power = read_letter_in_file_probability(file_name_input_num, True)
 probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text, file_size,zip_size, rar_size, xz_size, gzip_size, bzip_size, base64_file_size = execute(amount_letters_to_appear, total_number_of_char_in_text, alph_power, file_name_input_num, True)
 # preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text, file_size,zip_size, rar_size, xz_size, gzip_size, bzip_size, base64_file_size)
@@ -169,7 +197,21 @@ probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information
 amount_letters_to_appear_base64, total_number_of_char_in_text_base64, base64_alph_power = read_letter_in_file_probability(file_name_input_num, False)
 #print(amount_letters_to_appear_base64)
 probability_of_letter_to_appear_base64_dict, entropy_rounded_base64_h_f, amount_of_information_in_the_base64_text, base64_file_size,base64_zip_size, base64_rar_size, base64_xz_size, base64_gzip_size, base64_bzip_size, base64_file_size2 = execute(amount_letters_to_appear_base64, total_number_of_char_in_text_base64, base64_alph_power, file_name_input_num, False)
-preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text,
+
+
+#f2 = open("output2.txt", "w")
+#f2.write()
+#f2.close()
+
+preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_base64_dict,amount_letters_to_appear_base64, probability_of_letter_to_appear_dict, entropy_rounded_h_f, amount_of_information_in_the_text,
                file_size,zip_size, rar_size, xz_size, gzip_size, bzip_size, base64_file_size,
                entropy_rounded_base64_h_f, amount_of_information_in_the_base64_text,
-               base64_zip_size, base64_rar_size, base64_xz_size, base64_gzip_size,base64_bzip_size) # 20
+               base64_zip_size, base64_rar_size, base64_xz_size, base64_gzip_size,base64_bzip_size)# 20
+
+
+sys.stdout.close()
+
+# f3 = open("output3.txt", "w")
+#
+# f4 = open("output4.txt", "w")
+#
