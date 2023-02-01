@@ -185,7 +185,7 @@ def preetty_output(amount_letters_to_appear, probability_of_letter_to_appear_bas
     print(tableb64)
     print(table2)
 
-file_name_input_num = 10
+file_name_input_num = 4
 import sys # for output
 sys.stdout = open('output'+str(file_name_input_num)+'.txt', 'w', encoding='utf-8')
 
