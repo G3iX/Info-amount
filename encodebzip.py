@@ -1,38 +1,79 @@
-def read_letter_in_file_probability (file_name_input_num):
-    with open("destextes/" + str(file_name_input_num) + ".txt", "r", encoding="utf8") as file:
-        total_text = ""
-        # LetterD = {}
-        LetterD = {"А": 0, "Б": 0, "В": 0, "Г": 0, "Ґ": 0, "Д": 0, "Е": 0, "Є": 0, "Ж": 0, "З": 0, "И": 0, "І": 0,
-                   "Ї": 0, "Й": 0, "К": 0, "Л": 0, "М": 0, "Н": 0, "О": 0, "П": 0, "Р": 0, "С": 0, "Т": 0, "У": 0,
-                   "Ф": 0, "Х": 0, "Ц": 0, "Ч": 0, "Ш": 0, "Щ": 0, "Ь": 0, "Ю": 0, "Я": 0, "а": 0, "б": 0, "в": 0,
-                   "г": 0, "ґ": 0, "д": 0, "е": 0, "є": 0, "ж": 0, "з": 0, "и": 0, "і": 0, "ї": 0, "й": 0, "к": 0,
-                   "л": 0, "м": 0, "н": 0, "о": 0, "п": 0, "р": 0, "с": 0, "т": 0, "у": 0, "ф": 0, "х": 0, "ц": 0,
-                   "ч": 0, "ш": 0, "щ": 0, "ь": 0, "ю": 0, "я": 0}
-        totlen = 0
-        middle_text = ""
-        for line in file:
-            line = line.rstrip()
-            middle_text += line
-
-        for i in middle_text:
-            # print(i)
-            if i not in LetterD:
-                continue
-            else:  ### HERE WE GO!!!!!!!!!!!!!!!!!!!
-                total_text += i
-                totlen += 1
-                try:
-                    LetterD[i] += 1
-                except:
-                    continue  # LetterD.update({i: 1})  # continue
+def read_bz2_file (file_name_input_num):
     binary_read = ''
-    with open("destextes/" + str(file_name_input_num) + ".txt", "rb") as file:
+    with open("destextes/" + str(file_name_input_num) + ".bz2", "rb") as file:
         for i in file:
             binary_read += str(i)
+    return binary_read
 
-    alphabetPwr = len(LetterD)
-    return total_text, LetterD, totlen, alphabetPwr, binary_read
+binary_read = read_bz2_file(8)
+#print(binary_read)
 
-total_text, LetterD, totlen, alphabetPwr, binary_read = read_letter_in_file_probability(8)
-print(total_text)
-print(binary_read)
+BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+def text_base_64(data):
+    result = ""
+    # data_encoded = data.encode("utf-8", errors='replace') # encoding='unicode_escape' # hexadecimal codes
+    #print(data)
+    binary_data = ("".join(format(byte, 'b') for byte in bytes(data, 'ASCII')))
+    #print(binary_data)
+    chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
+    #print(chunks)
+
+    # for chunk in chunks:
+    #     if chunk != chunks[len(chunks)-1]: # last chunk
+    #         index = int(chunk[0:6], 2)
+    #         index2 = int(chunk[6:12], 2)
+    #         index3 = int(chunk[12:18], 2)
+    #         index4 = int(chunk[18:24], 2)
+    #         result += BASE64_CHARS[index]
+    #         result += BASE64_CHARS[index2]
+    #         result += BASE64_CHARS[index3]
+    #         result += BASE64_CHARS[index4]
+    #     else:
+    #         if len(chunks[len(chunks) - 1]) == 24:
+    #             index = int(chunk[0:6], 2)
+    #             index2 = int(chunk[6:12], 2)
+    #             index3 = int(chunk[12:18], 2)
+    #             index4 = int(chunk[18:24], 2)
+    #             result += BASE64_CHARS[index]
+    #             result += BASE64_CHARS[index2]
+    #             result += BASE64_CHARS[index3]
+    #             result += BASE64_CHARS[index4]
+    #         if len(chunks[len(chunks) - 1]) < 24:
+    #             if len(chunks[len(chunks) - 1]) >= 18: # index - index2 - index3
+    #                 index = int(chunk[0:6], 2)
+    #                 index2 = int(chunk[6:12], 2)
+    #                 index3 = int(chunk[12:18], 2)
+    #                 result += BASE64_CHARS[index]
+    #                 result += BASE64_CHARS[index2]
+    #                 result += BASE64_CHARS[index3]
+    #                 result += '='
+    #             else:
+    #                 if len(chunks[len(chunks) - 1]) >= 12: # index - index2
+    #                     index = int(chunk[0:6], 2)
+    #                     index2 = int(chunk[6:12], 2)
+    #                     result += BASE64_CHARS[index]
+    #                     result += BASE64_CHARS[index2]
+    #                     result += '='
+    #                     result += '='
+    #                 else:
+    #                     try:
+    #                         index = int(chunk[0:6], 2)
+    #                         result += BASE64_CHARS[index]
+    #                     except:
+    #                         print("error")
+    return result
+
+def encode_py_executer(filenum):
+    # filenum = 4
+    data = read_bz2_file(filenum)
+    base64_text = text_base_64(data)
+    # import base64
+    # bnotmine = base64.b64encode(bytes(data, 'utf-8'))
+    # print(bnotmine) # "Base64 encoded text:",
+
+    f = open("destextes/"+str(filenum)+"_bz2_base64.txt", "w")
+    f.writelines(base64_text)
+    f.close()
+
+
+encode_py_executer(8)
