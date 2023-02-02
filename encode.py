@@ -73,7 +73,7 @@ def text_base_64(data):
     # print(chunks)
 
     for chunk in chunks:
-        if chunk != chunks[len(chunks)-1]: # last chunk
+        if chunk != chunks[len(chunks) - 1]:  # not last chunk
             index = int(chunk[0:6], 2)
             index2 = int(chunk[6:12], 2)
             index3 = int(chunk[12:18], 2)
@@ -93,7 +93,7 @@ def text_base_64(data):
                 result += BASE64_CHARS[index3]
                 result += BASE64_CHARS[index4]
             if len(chunks[len(chunks) - 1]) < 24:
-                if len(chunks[len(chunks) - 1]) >= 18: # index - index2 - index3
+                if len(chunks[len(chunks) - 1]) >= 18:  # index - index2 - index3
                     index = int(chunk[0:6], 2)
                     index2 = int(chunk[6:12], 2)
                     index3 = int(chunk[12:18], 2)
@@ -102,7 +102,7 @@ def text_base_64(data):
                     result += BASE64_CHARS[index3]
                     result += '='
                 else:
-                    if len(chunks[len(chunks) - 1]) >= 12: # index - index2
+                    if len(chunks[len(chunks) - 1]) >= 12:  # index - index2
                         index = int(chunk[0:6], 2)
                         index2 = int(chunk[6:12], 2)
                         result += BASE64_CHARS[index]
@@ -110,11 +110,23 @@ def text_base_64(data):
                         result += '='
                         result += '='
                     else:
-                        try:
+                        if len(chunks[len(chunks) - 1]) <= 6:
+                            index2 = int(chunk[6:(len(chunks[len(chunks) - 1]))])
+                            result += BASE64_CHARS[index2]
+                            result += '='
+                            result += '='
+                        elif len(chunks[len(chunks) - 1]) == 6:
                             index = int(chunk[0:6], 2)
                             result += BASE64_CHARS[index]
-                        except:
-                            print("error")
+                            result += '='
+                            result += '='
+                        elif len(chunks[len(chunks) - 1]) >= 6:
+                            index = int(chunk[0:6], 2)
+                            result += BASE64_CHARS[index]
+                            index2 = int(chunk[6:(len(chunks[len(chunks) - 1]))])
+                            result += BASE64_CHARS[index2]
+                            result += '='
+                            result += '='
     return result
 
 def fr_to_bin(temp):
