@@ -70,7 +70,7 @@ def text_base_64(data):
     #print(data_encoded)
     #print(binary_data)
     chunks = [binary_data[i:i + 24] for i in range(0, len(binary_data), 24)]
-    #print(chunks)
+    # print(chunks)
 
     for chunk in chunks:
         if chunk != chunks[len(chunks)-1]: # last chunk
@@ -134,10 +134,10 @@ def encode_py_executer(filenum):
     # bnotmine = base64.b64encode(bytes(data, 'utf-8'))
     # print(bnotmine) # "Base64 encoded text:",
     try:
-        f = open("destextes/"+str(filenum)+"_base64.txt", "w")
+        f = open("destextes/"+str(filenum)+"_base64.txt", "r")
         f.writelines(base64_text)
         f.close()
     except:
         print("encode_py_executer error (in encode.py)")
 
-# encode_py_executer(10)
+encode_py_executer(8)
